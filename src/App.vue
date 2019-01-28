@@ -1,29 +1,47 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <header class="container__header">
+            <h1>Message Builder</h1>
+            <button @click="handleClickLanguage" class="button">English</button>
+            <button @click="handleClickLanguage" class="button">Spanish</button>
+        </header>
+        <main class="container__main">
+            <InputFields/>
+            <Favorites/>
+            <Menu/>
+        </main>
     </div>
-    <router-view/>
-  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script lang="ts">
+import Vue from 'vue'
+
+import InputFields from '@/components/InputFields.vue'
+import Menu from '@/components/Menu.vue'
+import Favorites from '@/components/Favorites.vue'
+
+import { CHANGE_LANGUAGE } from '@/store/mutation-types'
+
+export default Vue.extend({
+    methods: {
+        handleClickLanguage (e: any) {
+            let language = e.target.textContent === 'English' ? 'eng' : 'spa'
+            this.$store.commit(CHANGE_LANGUAGE, language)
+        }
+    },
+    components: {
+        InputFields,
+        Menu,
+        Favorites
     }
-  }
+})
+</script>
+
+<style lang="scss">
+.header__buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+    padding: 1rem;
 }
 </style>
